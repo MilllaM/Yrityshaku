@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 3: Ajoituksen tarkistus</title>
+    <style>
+      .tulos ul {
+        list-style: none;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>PRH:n APIn testaus, osa 3</h1>
+    <h2>Console näyttää, kun annettuja kirjaimia on >3 ja viimeisestä merkistä on >0,5 sec.</h2>
+    <input id='syote'></input>
+    <button id='button'>Etsi ja näytä firmat</button>
+    <br>
+    <div id='tulokset'>
+    </div>
+
+    <script>
+
+    let last;
+    let output;
+    let painallukset=0;
+    $('#syote').on('input', function() {
+      painallukset ++;
+      let n = new Date()
+      output=(last - n); //tuoreimman painalluksen aikaero edelliseen
+      console.log(output);
+      console.log('painallusten määrä: '+ painallukset);
+      if(output < -2000) {
+        console.log("meni yli 2 sekuntia");
+      }
+      last = n;
+    });
+
+    // document.getElementById('button').addEventListener('click', haeFirmat);
+    //
+    // //etsi PRH:sta
+    // function haeFirmat() {
+    //   let input = document.getElementById('syote').value;
+    //   console.log(input); //toimii
+    //   let xhr=new XMLHttpRequest();
+    //   let api = 'http://avoindata.prh.fi/bis/v1?totalResults=false&maxResults=20&resultsFrom=0&name=';
+    //   let str='kark';
+    //   let url = api + input;
+    //   console.log(url);
+    //
+    //   //create xhr object
+    //
+    //
+    //
+    //   //open - type, url, async(true/false)
+    //   //xhr.open('GET', 'http://avoindata.prh.fi/bis/v1?totalResults=false&maxResults=20&resultsFrom=0&name=lohjan', true);
+    //   xhr.open('GET', url, true);
+    //   xhr.onload = function() {
+    //     if(this.status == 200) {  //status check of the response ,200=ok, see at the bottom too
+    //       let virmat = JSON.parse(this.responseText);
+    //       console.log(virmat);
+    //       console.log(virmat.results);
+    //
+    //       let output='';
+    //       for(let i in virmat.results){
+    //         output +=
+    //         '<div class="tulos">' +
+    //         '<ul>' +
+    //         '<li>Nimi: '+virmat.results[i].name+'</li>' +
+    //         '<li>Y-tunnus: '+virmat.results[i].businessId+'</li>' +
+    //         '</ul>'
+    //         '</div>';
+    //       }
+    //
+    //       document.getElementById('tulokset').innerHTML = output;
+    //     }
+    //   }
+    //   //sending the request:
+    //   xhr.send();
+    // }
+
+    /*  HTTP statuses:
+    200: OK
+    403: Forbidden
+    404: Not Found    */
+
+    </script>
+  </body>
+</html>

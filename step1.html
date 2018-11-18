@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 1: APIn testaus</title>
+    <style>
+      .tulos ul {
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>PRH:n APIn testaus</h1>
+    <h2>Hae PRH:n listoilta 20 firmaa, joiden nimessä on "Lohjan"</h2>
+    <button id='button'>Etsi ja näytä firmat</button>
+    <br>
+    <div id='tulokset'>
+    </div>
+
+    <script>
+
+    document.getElementById('button').addEventListener('click', haeFirmat);
+
+    //etsi PRH:sta
+    function haeFirmat() {
+      //create xhr object
+      let xhr=new XMLHttpRequest();
+      //open - type, url, async(true/false)
+      xhr.open('GET', 'http://avoindata.prh.fi/bis/v1?totalResults=false&maxResults=20&resultsFrom=0&name=lohjan', true);
+      xhr.onload = function() {
+        if(this.status == 200) {  //status check of the response ,200=ok, see at the bottom too
+          let virmat = JSON.parse(this.responseText);
+          console.log(virmat);
+          console.log(virmat.results);
+
+          let output='';
+          for(let i in virmat.results){
+            output +=
+            '<div class="tulos">' +
+            '<ul>' +
+            '<li>Nimi: '+virmat.results[i].name+'</li>' +
+            '<li>Y-tunnus: '+virmat.results[i].businessId+'</li>' +
+            '</ul>'
+            '</div>';
+          }
+
+          document.getElementById('tulokset').innerHTML = output;
+        }
+      }
+      //sending the request:
+      xhr.send();
+    }
+
+    /*  HTTP statuses:
+    200: OK
+    403: Forbidden
+    404: Not Found    */
+
+    </script>
+  </body>
+</html>
