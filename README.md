@@ -29,4 +29,4 @@ dropdownin luonti
 
 ## step7.html
 
-Tämä vielä tekemättä: lopullisten tietojen esitys 
+Lopullisten tietojen esitys (CSS vielä tekemättä) 

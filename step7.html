@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 7: Valinnan näyttö</title>
+  <style>
+
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>PRH:n APIn testaus, osa 7</h1>
+  <h2>Valitun firman tietojen näyttö</h2>
+  <p>(Haku rajattu 50:een, koska API tuntuu olevan aika hidas)</p>
+  <input id='syote'><br>
+  <select id="tulokset" onchange="findObjectByKey(this.value)"></select>
+  <br>
+  <div id='valittu'>
+  </div>
+
+  <script>
+
+  let last;
+  let output;
+  let painallukset=0;
+  let hakujono;
+
+  $('#syote').on('input', function() {
+    painallukset ++;
+    let n = new Date()
+    output=(last - n); //tuoreimman painalluksen aikaero edelliseen
+    if (painallukset >3 && output < -500) {
+      haeFirmat();
+    }
+    last = n;
+  });
+
+  const suggestions = document.querySelector('.suggestions');
+
+  //etsi PRH:sta
+  function haeFirmat() {
+    let input = document.getElementById('syote').value;
+    let xhr=new XMLHttpRequest();
+    let api = 'http://avoindata.prh.fi/bis/v1?totalResults=false&maxResults=50&resultsFrom=0&name=';
+    let url = api + input;
+    console.log(url);
+
+    //create xhr object:
+    //open - type, url, async(true/false)
+    xhr.open('GET', url, true);
+    xhr.onload = function() {
+      if(this.status == 200) {
+        let virmat = JSON.parse(this.responseText);
+        console.log(virmat.results);
+
+        //lista halutuloksista:
+        hakujono = virmat.results;
+        console.log(hakujono);
+        uusiArray(hakujono);
+
+        function getNamesOnly(item) {
+          var fullname = item.name;
+          return fullname;
+        }
+
+        function uusiArray() {
+          var uusiJono = hakujono.map(getNamesOnly);
+          console.log(uusiJono);
+          teeDropDown(uusiJono);
+        }
+
+        function teeDropDown(jono) {
+          var select = document.getElementById("tulokset");
+          for(var i = 0; i < jono.length; i++) {
+            var opt = jono[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+          }
+        }
+
+      } //end of: if(this.status == 200)-block
+    }
+
+    //sending the request:
+    xhr.send();
+
+  }
+
+  //valitun tarkemmat tiedot:
+
+  function findObjectByKey(value) {
+
+    for (var i = 0; i < hakujono.length; i++) {
+      if (hakujono[i].name === value) {
+        let etsitty= hakujono[i];
+        console.log(etsitty);
+        showDetails(etsitty);
+        return etsitty;
+      }
+    }
+    return null;
+  }
+
+  function showDetails(etsitty){
+    let output=`
+    <div class="tulos">
+      <ul>
+      <li>Nimi: ${etsitty.name}</li>
+      <li>Y-tunnus: ${etsitty.businessId}</li>
+      <li>Rekisteröitipäivä: ${etsitty.registrationDate}</li>
+      </ul>
+      </div>`;
+
+    document.getElementById('valittu').innerHTML = output;
+  }
+
+  </script>
+</body>
+</html>
