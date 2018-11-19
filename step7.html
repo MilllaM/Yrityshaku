@@ -3,23 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="finalstyle.css" rel="stylesheet">
   <title>Step 7: Valinnan näyttö</title>
-  <style>
-
-  </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+  <div id="keskus">
   <h1>PRH:n APIn testaus, osa 7</h1>
-  <h2>Valitun firman tietojen näyttö</h2>
+  <h2>Haku firman nimellä</h2>
   <p>(Haku rajattu 50:een, koska API tuntuu olevan aika hidas)</p>
-  <input id='syote'><br>
+  <input id='syote' autofocus><br>
   <select id="tulokset" onchange="findObjectByKey(this.value)"></select>
   <br>
   <div id='valittu'>
   </div>
-
+</div>
   <script>
+
+  window.onload = function() {
+    document.getElementById('syote').value = '';
+    }
 
   let last;
   let output;
@@ -110,11 +113,13 @@
       <ul>
       <li>Nimi: ${etsitty.name}</li>
       <li>Y-tunnus: ${etsitty.businessId}</li>
-      <li>Rekisteröitipäivä: ${etsitty.registrationDate}</li>
+      <li>Rekisteröintipäivä: ${etsitty.registrationDate}</li>
       </ul>
       </div>`;
 
     document.getElementById('valittu').innerHTML = output;
+    document.getElementById('syote').value = '';
+
   }
 
   </script>

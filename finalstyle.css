@@ -1,0 +1,65 @@
+body {
+  background-color: #B56357;
+
+}
+
+div#keskus {
+  margin: 0 auto;
+  padding: 20px;
+  border-color: #EAE3EA;
+  border-width: 7px;
+  border-style: solid;
+  width: 90%;
+  height: 90%;
+
+
+}
+h1 {
+  text-align: center;
+  padding: 20px;
+  color: #EAE3EA;
+  font-size: 40px;
+}
+h2 {
+  text-align: center;
+  padding: 10px;
+  color: #EAE3EA;
+  font-size: 30px;
+}
+p {
+  text-align: left;
+  color: #EAE3EA;
+  margin-left: 5px;
+  font-size: 20px;
+}
+
+input#syote {
+  width: 400px;
+  height:36px;
+  margin: 10px;
+}
+
+select#tulokset {
+  width: 420px;
+  height: 40px;
+  margin: 10px;
+}
+
+
+#tulokset, #valittu, #syote, li {
+  font-size: 20px;
+}
+
+li {
+  list-style: none;
+  padding: 5px;
+  margin-left: -20px;
+}
+
+ul {
+  background-color: #B4DBC0;
+  width: 380px;
+  border-color: #EAE3EA;
+  border-width: 7px;
+  border-style: solid;
+}

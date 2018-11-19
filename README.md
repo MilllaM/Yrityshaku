@@ -27,6 +27,6 @@ Muualta kopiotua (varastettua) koodia + CSS kokeilu.
 
 dropdownin luonti
 
-## step7.html
+## step7.html /Final
 
-Lopullisten tietojen esitys (CSS vielä tekemättä) 
+Lopullisten tietojen esitys (ja vähän CSS:ää) 
